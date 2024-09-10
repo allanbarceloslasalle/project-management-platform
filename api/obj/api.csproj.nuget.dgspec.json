@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Allan Barcelos\\Projects\\project-management-platform\\api\\api.csproj": {}
+    "C:\\Portafolio\\TrendsProjects\\project-management-platform\\api\\api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Allan Barcelos\\Projects\\project-management-platform\\api\\api.csproj": {
+    "C:\\Portafolio\\TrendsProjects\\project-management-platform\\api\\api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Allan Barcelos\\Projects\\project-management-platform\\api\\api.csproj",
+        "projectUniqueName": "C:\\Portafolio\\TrendsProjects\\project-management-platform\\api\\api.csproj",
         "projectName": "api",
-        "projectPath": "C:\\Users\\Allan Barcelos\\Projects\\project-management-platform\\api\\api.csproj",
-        "packagesPath": "C:\\Users\\Allan Barcelos\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Allan Barcelos\\Projects\\project-management-platform\\api\\obj\\",
+        "projectPath": "C:\\Portafolio\\TrendsProjects\\project-management-platform\\api\\api.csproj",
+        "packagesPath": "C:\\Users\\jorge\\.nuget\\packages\\",
+        "outputPath": "C:\\Portafolio\\TrendsProjects\\project-management-platform\\api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Allan Barcelos\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jorge\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -77,7 +78,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
