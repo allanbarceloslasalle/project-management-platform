@@ -9,7 +9,7 @@ FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG configuration=Realease
 WORKDIR /src
 COPY ["api.csproj", "./"]
-RUN dotnet restorte "api.csproj"
+RUN dotnet restore "api.csproj"
 COPY . .
 WORKDIR "/src/."
 RUN dotnet build "api.csproj" -c $configuration -o /app/build
