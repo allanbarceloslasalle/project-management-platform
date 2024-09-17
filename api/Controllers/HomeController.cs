@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -10,6 +12,13 @@ namespace Api.Controllers
         public IActionResult Get()
         {
             return Ok(new { message = "API working"});
+        }
+
+        [HttpGet("protected")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Protected()
+        {
+            return Ok(new { message = "This is a protected route"});
         }
     }
 }

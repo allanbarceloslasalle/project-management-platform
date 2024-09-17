@@ -1,0 +1,21 @@
+@api = https://localhost:7172
+
+###
+
+GET  {{api}}/api HTTP/1.1
+Accept: application/json
+
+###
+
+POST  {{api}}/api/auth/login HTTP/1.1
+Accept: application/json
+
+{
+    "Email" : "admin@example.com",
+    "Password" : "AdminPassword123!"
+}
+
+###
+
+GET  {{api}}/api/protected HTTP/1.1
+Accept: application/json
