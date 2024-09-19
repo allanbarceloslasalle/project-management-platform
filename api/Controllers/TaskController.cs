@@ -1,25 +1,51 @@
+using Api.Data;
+using Api.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers
 {
-    public class TaskController : ControllerBase {
+    [Route("api/[controller]")]
+    [ApiController]
+    public class TaskController : ControllerBase
+    {
+        private readonly ApplicationDbContext _context;
 
-        public TaskController(){
-
+        // Injecting ApplicationDbContext via constructor
+        public TaskController(ApplicationDbContext context)
+        {
+            _context = context;
         }
 
-        // /api/task
+        // GET: /api/task
         [HttpGet]
-        public String GetTasks()
+        public async Task<ActionResult<IEnumerable<ProjectTask>>> GetTasks()
         {
-            return "";
+            // Fetching all tasks from the database
+            var tasks = await _context.ProjectTasks
+                .Include(t => t.AssignedTo)
+                .Include(t => t.Project)
+                .ToListAsync();
+
+            return Ok(tasks);
         }
 
-        // /api/task/1000
+        // GET: /api/task/{id}
         [HttpGet("{id}")]
-        public String GetTask(int id)
+        public async Task<ActionResult<ProjectTask>> GetTask(int id)
         {
-            return "";
+            // Fetching a specific task by id
+            var task = await _context.ProjectTasks
+                .Include(t => t.AssignedTo)
+                .Include(t => t.Project)
+                .FirstOrDefaultAsync(t => t.Id == id);
+
+            if (task == null)
+            {
+                return NotFound(); // If no task is found, return 404
+            }
+
+            return Ok(task); // Returning the task
         }
 
         
