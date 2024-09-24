@@ -34,15 +34,3 @@ https://jwt.io/
 dotnet ef migrations add "Name of Migration"
 
 dotnet ef database update
-
-
-# Assigment (define the authorizations) (20 min)
-
-Collaborative Blog:
-name of branch:  feature/authorization-blog
-
-E-Commerce Application: 
-name of branch:  feature/authorization-products
-
-Task Management:
-name of branch:  feature/authorization-task
