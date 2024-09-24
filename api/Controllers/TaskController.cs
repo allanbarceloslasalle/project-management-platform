@@ -19,12 +19,14 @@ namespace Api.Controllers
 
 
         [HttpGet] // TO GET somenting
+        [Authorize(Roles = "Admin,Manager,User,Developer")]
         public async Task<ActionResult<IEnumerable<ProjectTask>>> GetTasks() // Pagination 
         {
             return await _context.ProjectTasks.ToListAsync();
         }
 
         [HttpGet("{id}")] // TO GET
+        [Authorize(Roles = "Admin,Manager,User,Developer")]
         public async Task<ActionResult<ProjectTask>> GetTask(int id)
         {
             var task = await _context.ProjectTasks.FindAsync(id);
@@ -38,6 +40,7 @@ namespace Api.Controllers
         
         // /api/task
         [HttpPost]
+        [Authorize(Roles = "Admin,Manager,User,Developer")]
         public async Task<ActionResult<ProjectTask>> CreateTask(ProjectTask task)
         {
             _context.ProjectTasks.Add(task);
@@ -50,6 +53,7 @@ namespace Api.Controllers
         // PUT -> Update ALL
         // PATCH -> Update Partials
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin,Manager,User,Developer")]
         public async Task<IActionResult> UpdateTask(int id, ProjectTask task)
         {
             if(id != task.Id)
@@ -62,7 +66,8 @@ namespace Api.Controllers
         }
         
         
-        [HttpDelete("{id}")] // soft-delete 
+        [HttpDelete("{id}")] // soft-delete
+        [Authorize(Roles = "Admin,Manager")] 
         public async Task<IActionResult> DeleteTask(int id)
         {
             var task = await _context.ProjectTasks.FindAsync(id);
