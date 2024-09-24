@@ -35,7 +35,6 @@ dotnet ef migrations add "Name of Migration"
 
 dotnet ef database update
 
-
 # Assigment (define the authorizations) (20 min)
 
 Collaborative Blog:
