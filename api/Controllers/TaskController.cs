@@ -2,6 +2,7 @@ using Api.Data;
 using Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 // CRUD -> Create Read, Update, Delete
 // 99% os projects you will see in your life  follow this pattern
 
