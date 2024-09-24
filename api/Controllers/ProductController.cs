@@ -25,6 +25,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("{id}")] // TO GET
+        [Authorize(Roles = "Admin,Manager,User,Developer")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
             var task = await _context.Products.FindAsync(id);
@@ -37,6 +38,7 @@ namespace Api.Controllers
 
         
         [HttpPost]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<ActionResult<Product>> CreateProduct(Product product)
         {
             _context.Products.Add(product);
@@ -49,6 +51,7 @@ namespace Api.Controllers
         // PUT -> Update ALL
         // PATCH -> Update Partials
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> UpdateProduct(int id, Product product)
         {
             if(id != product.Id)
@@ -62,6 +65,7 @@ namespace Api.Controllers
         
         
         [HttpDelete("{id}")] // soft-delete 
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);
