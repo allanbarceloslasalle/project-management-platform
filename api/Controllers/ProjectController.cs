@@ -9,25 +9,25 @@ namespace Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class TaskController : ControllerBase {
+    public class ProjectController : ControllerBase {
 
         private readonly ApplicationDbContext _context;
         
-        public TaskController(ApplicationDbContext context){ // Inject the dependency
+        public ProjectController(ApplicationDbContext context){ // Inject the dependency
             _context = context;
         }
 
 
         [HttpGet] // TO GET somenting
-        public async Task<ActionResult<IEnumerable<ProjectTask>>> GetTasks() // Pagination 
+        public async Task<ActionResult<IEnumerable<Project>>> GetProjects() // Pagination 
         {
-            return await _context.ProjectTasks.ToListAsync();
+            return await _context.Projects.ToListAsync();
         }
 
         [HttpGet("{id}")] // TO GET
-        public async Task<ActionResult<ProjectTask>> GetTask(int id)
+        public async Task<ActionResult<Project>> GetProject(int id)
         {
-            var task = await _context.ProjectTasks.FindAsync(id);
+            var task = await _context.Projects.FindAsync(id);
 
             if(task == null)
                 return NotFound();
@@ -36,26 +36,25 @@ namespace Api.Controllers
         }
 
         
-        // /api/task
         [HttpPost]
-        public async Task<ActionResult<ProjectTask>> CreateTask(ProjectTask task)
+        public async Task<ActionResult<Project>> CreateTask(Project project)
         {
-            _context.ProjectTasks.Add(task);
+            _context.Projects.Add(project);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetTask), new {id = task.Id}, task);
+            return CreatedAtAction(nameof(GetProject), new {id = project.Id}, project);
         }
 
         
         // PUT -> Update ALL
         // PATCH -> Update Partials
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTask(int id, ProjectTask task)
+        public async Task<IActionResult> UpdateProject(int id, Project project)
         {
-            if(id != task.Id)
+            if(id != project.Id)
                 return BadRequest();
             
-            _context.Entry(task).State = EntityState.Modified;
+            _context.Entry(project).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -63,14 +62,14 @@ namespace Api.Controllers
         
         
         [HttpDelete("{id}")] // soft-delete 
-        public async Task<IActionResult> DeleteTask(int id)
+        public async Task<IActionResult> DeleteProject(int id)
         {
-            var task = await _context.ProjectTasks.FindAsync(id);
+            var project = await _context.Projects.FindAsync(id);
 
-            if(task == null)
+            if(project == null)
                 return NotFound();
 
-            _context.ProjectTasks.Remove(task);
+            _context.Projects.Remove(project);
             await _context.SaveChangesAsync();
 
             return NoContent();

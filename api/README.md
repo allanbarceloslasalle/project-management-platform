@@ -28,3 +28,9 @@ https://learn.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.dbcon
 
 ## JWT
 https://jwt.io/
+
+# Migration
+
+dotnet ef migrations add "Name of Migration"
+
+dotnet ef database update
