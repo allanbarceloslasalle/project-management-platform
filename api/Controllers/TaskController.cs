@@ -1,48 +1,79 @@
+using Api.Data;
+using Api.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+// CRUD -> Create Read, Update, Delete
+// 99% os projects you will see in your life  follow this pattern
 
 namespace Api.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class TaskController : ControllerBase {
 
-        public TaskController(){
-
+        private readonly ApplicationDbContext _context;
+        
+        public TaskController(ApplicationDbContext context){ // Inject the dependency
+            _context = context;
         }
 
-        // /api/task
-        [HttpGet]
-        public String GetTasks()
+
+        [HttpGet] // TO GET somenting
+        public async Task<ActionResult<IEnumerable<ProjectTask>>> GetTasks() // Pagination 
         {
-            return "";
+            return await _context.ProjectTasks.ToListAsync();
         }
 
-        // /api/task/1000
-        [HttpGet("{id}")]
-        public String GetTask(int id)
+        [HttpGet("{id}")] // TO GET
+        public async Task<ActionResult<ProjectTask>> GetTask(int id)
         {
-            return "";
+            var task = await _context.ProjectTasks.FindAsync(id);
+
+            if(task == null)
+                return NotFound();
+
+            return task;
         }
 
         
         // /api/task
         [HttpPost]
-        public String CreateTask()
+        public async Task<ActionResult<ProjectTask>> CreateTask(ProjectTask task)
         {
-            return "";
+            _context.ProjectTasks.Add(task);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetTask), new {id = task.Id}, task);
         }
 
         
-        // /api/task
+        // PUT -> Update ALL
+        // PATCH -> Update Partials
         [HttpPut("{id}")]
-        public String UpdateTask(int id, String task)
+        public async Task<IActionResult> UpdateTask(int id, ProjectTask task)
         {
-            return "";
+            if(id != task.Id)
+                return BadRequest();
+            
+            _context.Entry(task).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
         
-        // /api/task
-        [HttpDelete("{id}")]
-        public String DeleteTask(int id)
+        
+        [HttpDelete("{id}")] // soft-delete 
+        public async Task<IActionResult> DeleteTask(int id)
         {
-            return "";
+            var task = await _context.ProjectTasks.FindAsync(id);
+
+            if(task == null)
+                return NotFound();
+
+            _context.ProjectTasks.Remove(task);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     
     }

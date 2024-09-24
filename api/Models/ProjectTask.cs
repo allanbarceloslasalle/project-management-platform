@@ -16,6 +16,5 @@ namespace Api.Models
         public int ProjectId { get; set; }
         public required Project  Project { get; set; }
 
-
     }
 }

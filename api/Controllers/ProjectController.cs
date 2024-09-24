@@ -1,6 +1,5 @@
 using Api.Data;
 using Api.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 // CRUD -> Create Read, Update, Delete
@@ -20,14 +19,12 @@ namespace Api.Controllers
 
 
         [HttpGet] // TO GET somenting
-        [Authorize(Roles = "Admin,Manager,User,Developer")]
         public async Task<ActionResult<IEnumerable<Project>>> GetProjects() // Pagination 
         {
             return await _context.Projects.ToListAsync();
         }
 
         [HttpGet("{id}")] // TO GET
-        [Authorize(Roles = "Admin,Manager,User,Developer")]
         public async Task<ActionResult<Project>> GetProject(int id)
         {
             var task = await _context.Projects.FindAsync(id);
@@ -38,24 +35,9 @@ namespace Api.Controllers
             return task;
         }
 
-
-        // /api/blog-post/123/comments
-        [HttpGet("{id}/tasks")] // TO GET
-        [Authorize(Roles = "Admin,Manager,User,Developer")]
-        public async Task<ActionResult<IEnumerable<ProjectTask>>> GetProjecttasks(int id)
-        {
-
-            var task = await _context.Projects.FindAsync(id);
-
-            if (task == null)
-                return NotFound();
-
-            return task.ProjectTasks.ToList();
-        }
         
         [HttpPost]
-        [Authorize(Roles = "Admin,Manager")]
-        public async Task<ActionResult<Project>> CreateProject(Project project)
+        public async Task<ActionResult<Project>> CreateTask(Project project)
         {
             _context.Projects.Add(project);
             await _context.SaveChangesAsync();
@@ -67,7 +49,6 @@ namespace Api.Controllers
         // PUT -> Update ALL
         // PATCH -> Update Partials
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> UpdateProject(int id, Project project)
         {
             if(id != project.Id)
@@ -80,8 +61,7 @@ namespace Api.Controllers
         }
         
         
-        [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")] // soft-delete 
         public async Task<IActionResult> DeleteProject(int id)
         {
             var project = await _context.Projects.FindAsync(id);
