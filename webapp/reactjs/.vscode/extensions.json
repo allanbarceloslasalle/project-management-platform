@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "dbaeumer.vscode-eslint",
+        "ecmel.vscode-html-css",
+        "xabikos.javascriptsnippets",
+        "ritwickdey.liveserver",
+        "christian-kohler.npm-intellisense",
+        "humao.rest-client"
+    ]
+}
