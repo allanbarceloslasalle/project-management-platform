@@ -13,7 +13,6 @@ packages/
 *.snupkg
 .nuget/
 
-.vscode/
 .ionide/
 .idea/
 *.csproj.user
