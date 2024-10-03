@@ -48,25 +48,31 @@ namespace Api.Controllers
 
             if(result.Succeeded){
                 var user = await _userManager.FindByEmailAsync(model.Email);
-                var token = GenerateJwtToken(user);
+                var token = await GenerateJwtToken(user);
                 return Ok(new {Token = token});
             }
             return Unauthorized();
         }
 
-        private string GenerateJwtToken(IdentityUser user){
+        private async Task<string> GenerateJwtToken(IdentityUser user){
 
-            var claims = new[]{
+            var roles = await _userManager.GetRolesAsync(user);
+            var claims = new List<Claim>{
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["jwt:key"])); // salt
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Secret"])); // salt
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: _configuration["jwtIssuer"],
-                audience: _configuration["Jwt:Issuer"],
+                issuer: _configuration["JwtSettings:Issuer"],
+                audience: _configuration["JwtSettings:Issuer"],
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(60),
                 signingCredentials: credentials
